@@ -219,6 +219,8 @@ namespace MissionPlanner
         }
         public BufferedStream logfile { get; set; }
         public BufferedStream rawlogfile { get; set; }
+        public BufferedStream att_tune_logfile { get; set; }
+        public string att_tune_logpath { get; set; }
 
         int _mavlink1count = 0;
         int _mavlink2count = 0;
@@ -3847,6 +3849,24 @@ Please check the following
 // flush on heartbeat - 1 seconds
                                     logfile.Flush();
                                     rawlogfile.Flush();
+                                }
+                            }
+                        }
+                        // for additional short-time logging
+                        if (att_tune_logfile != null && att_tune_logpath != "")
+                        {
+                            lock (att_tune_logfile)
+                            {
+                                byte[] datearray = BitConverter.GetBytes(
+                                                    (UInt64)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds * 1000));
+                                Array.Reverse(datearray);
+                                att_tune_logfile.Write(datearray, 0, datearray.Length);
+                                att_tune_logfile.Write(buffer, 0, buffer.Length);
+
+                                if (msgid == 0)
+                                {
+                                    // flush on heartbeat - 1 seconds
+                                    att_tune_logfile.Flush();
                                 }
                             }
                         }

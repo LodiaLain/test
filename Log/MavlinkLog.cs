@@ -1796,5 +1796,56 @@ namespace MissionPlanner.Log
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
         }
+
+        // for additional short-time logging
+        public void default_Graph(int tune_type)
+        {
+            if (tune_type == 0)
+            {
+                GraphItem("ATTITUDE", "roll", false);
+                GraphItem("NAV_CONTROLLER_OUTPUT", "nav_roll", false);
+            }
+            else if (tune_type == 1)
+            {
+                GraphItem("ATTITUDE", "pitch", false);
+                GraphItem("NAV_CONTROLLER_OUTPUT", "nav_pitch", false);
+            }
+            else if (tune_type == 2)
+            {
+                GraphItem("ATTITUDE", "yaw", false);
+                GraphItem("NAV_CONTROLLER_OUTPUT", "nav_bearing", false);
+            }
+            else
+            {
+                GraphItem("ATTITUDE", "pitch", false);
+                GraphItem("NAV_CONTROLLER_OUTPUT", "nav_pitch", false);
+                GraphItem("ATTITUDE", "roll", false);
+                GraphItem("NAV_CONTROLLER_OUTPUT", "nav_roll", false);
+            }
+        }
+
+        public void default_open(string file)
+        {
+            this.Text = "Log - " + Path.GetFileName(file);
+
+            List<string> fields = GetLogFileValidFields(file);
+
+            zg1.GraphPane.CurveList.Clear();
+
+            //GetLogFileData(zg1, openFileDialog1.FileName, fields);
+
+            try
+            {
+                // fix new line types
+                ThemeManager.ApplyThemeTo(this);
+
+                zg1.Invalidate();
+                zg1.AxisChange();
+            }
+            catch
+            {
+            }
+
+        }
     }
 }

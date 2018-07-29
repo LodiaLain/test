@@ -4649,6 +4649,51 @@ namespace MissionPlanner.GCSViews
             MainV2.comPort.setMountConfigure(MAVLink.MAV_MOUNT_MODE.MAVLINK_TARGETING, false, false, false);
             MainV2.comPort.setMountControl((float)trackBarPitch.Value * 100.0f, (float)trackBarRoll.Value * 100.0f, (float)trackBarYaw.Value * 100.0f, false);
         }
+
+        // for additional short-time logging
+        public bool recordext = false;
+        public BufferedStream recordext_file = null;
+        public string recordext_path = "";
+        private void BUT_att_tune_view_Click(object sender, EventArgs e)
+        {
+            recordext = !recordext;
+            if (recordext)
+            {
+                if (!MainV2.comPort.BaseStream.IsOpen)
+                {
+                    recordext = false;
+                    return;
+                }
+                BUT_att_tune_view.Text = "结束记录";
+                Directory.CreateDirectory(Settings.Instance.LogDir);
+
+
+                MainV2.comPort.att_tune_logpath = Settings.Instance.LogDir + Path.DirectorySeparatorChar +
+                            DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".tlog";
+
+                MainV2.comPort.att_tune_logfile =
+                    new BufferedStream(
+                        File.Open(MainV2.comPort.att_tune_logpath, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None));
+            }
+            else
+            {
+                BUT_att_tune_view.Text = "开始记录";
+                // 
+
+                lock (MainV2.comPort.att_tune_logfile)
+                {
+                    MainV2.comPort.att_tune_logfile.Close();
+                    MainV2.comPort.att_tune_logfile = null;
+                }
+
+                Form frm = new MavlinkLog();
+                ThemeManager.ApplyThemeTo(frm);
+                ((MavlinkLog)frm).default_open(MainV2.comPort.att_tune_logpath);
+                ((MavlinkLog)frm).default_Graph(CMB_tune_type.SelectedIndex);
+                frm.Show();
+                MainV2.comPort.att_tune_logpath = "";
+            }
+        }
     }
 }
  
