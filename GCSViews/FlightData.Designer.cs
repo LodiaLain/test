@@ -2340,7 +2340,7 @@
             // 
             // FlightData
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            
             this.Controls.Add(this.MainH);
             resources.ApplyResources(this, "$this");
             this.Name = "FlightData";
