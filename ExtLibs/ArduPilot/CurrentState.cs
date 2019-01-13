@@ -703,6 +703,23 @@ namespace MissionPlanner
         float _targetairspeed;
         float _climbrate;
 
+
+        /// <summary>
+        /// used in DEBUG_VECT
+        /// </summary>
+        [DisplayText("DEBUG_VECT 1st float")]
+        public float debug_vect_f1 { get; set; }
+
+        [DisplayText("DEBUG_VECT 2nd float")]
+        public float debug_vect_f2 { get; set; }
+
+        [DisplayText("DEBUG_VECT 3rd float")]
+        public float debug_vect_f3 { get; set; }
+
+        [DisplayText("DEBUG_VECT 1st string")]
+        public float debug_vect_str { get; set; }
+
+
         [DisplayText("Wind Direction (Deg)")]
         public float wind_dir { get; set; }
 
@@ -1948,6 +1965,16 @@ namespace MissionPlanner
 
                         wind_dir = (wind.direction + 360)%360;
                         wind_vel = wind.speed*multiplierspeed;
+                    }
+
+                    // test of DEBUG_VECT msg
+                    mavLinkMessage = MAV.getPacket((uint)MAVLink.MAVLINK_MSG_ID.DEBUG_VECT);
+                    if(mavLinkMessage != null)
+                    {
+                        var dv = mavLinkMessage.ToStructure<MAVLink.mavlink_debug_vect_t>();
+                        debug_vect_f1 = dv.x;
+                        debug_vect_f2 = dv.y;
+                        debug_vect_f3 = dv.z;
                     }
 
 

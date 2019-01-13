@@ -4650,6 +4650,26 @@ namespace MissionPlanner.GCSViews
             MainV2.comPort.setMountControl((float)trackBarPitch.Value * 100.0f, (float)trackBarRoll.Value * 100.0f, (float)trackBarYaw.Value * 100.0f, false);
         }
 
+
+        private void BUT_timesync_Click(object sender, EventArgs e)
+        {
+            if (!MainV2.comPort.BaseStream.IsOpen)
+            {
+                return;
+            }
+            // call the generatePacket(MAVLINK_MSG_ID messageType, object indata) method
+            MAVLink.mavlink_timesync_t tsync = new MAVLink.mavlink_timesync_t();
+            tsync.tc1 = tsync.ts1 = (Int64)((DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds * 1000000); ;
+            try
+            {
+                MainV2.comPort.sendPacket(tsync, MainV2.comPort.sysidcurrent, MainV2.comPort.compidcurrent);
+            }
+            catch 
+            {
+                CustomMessageBox.Show("Time_sync msg post failed");
+            }
+        }
+
         // for additional short-time logging
         public bool recordext = false;
         public BufferedStream recordext_file = null;
