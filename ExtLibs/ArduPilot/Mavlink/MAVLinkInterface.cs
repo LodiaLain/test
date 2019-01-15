@@ -16,6 +16,7 @@ using MissionPlanner.Comms;
 using MissionPlanner.Mavlink;
 using MissionPlanner.Utilities;
 using Timer = System.Timers.Timer;
+using System.Drawing;
 
 namespace MissionPlanner
 {
@@ -4967,6 +4968,58 @@ Please check the following
                             break;
                     }
                     break;
+            }
+        }
+
+        /// <summary>
+        /// 发送跟踪目标
+        /// </summary>
+        /// <param name="req"></param>
+        public bool sendTrackingTarget(UInt32 seq, Rectangle targetRect, byte target_sys_id = 1)
+        {
+            giveComport = true;
+
+            mavlink_sg_tgt_coord_item_t req = new mavlink_sg_tgt_coord_item_t();
+            req.target_system = target_sys_id;
+            req.target_component = 0;
+            req.frame_index = seq;
+            req.pix_top_x = (ushort)targetRect.X;
+            req.pix_top_y = (ushort)targetRect.X;
+            req.width = (ushort)targetRect.Width;
+            req.height = (ushort)targetRect.Height;
+            req.ext_param = 0;
+
+            // request
+            generatePacket(MAVLINK_MSG_ID.SG_TGT_COORD, req);
+
+            DateTime start = DateTime.Now;
+            int retrys = 10;
+
+            while (true)
+            {
+                if (!(start.AddMilliseconds(400) > DateTime.Now))
+                {
+                    if (retrys > 0)
+                    {
+                        log.Info("send TrackingTarget Retry " + retrys);
+                        generatePacket(MAVLINK_MSG_ID.SG_TGT_COORD, req);
+
+                        start = DateTime.Now;
+                        retrys--;
+                        continue;
+                    }
+                    giveComport = false;
+                    return false;
+                    //throw new TimeoutException("Timeout on read - sendTrackingTarget");
+                }
+                MAVLinkMessage buffer = readPacket();
+                if (buffer.msgid == (uint)MAVLINK_MSG_ID.SG_TGT_ACK)
+                {
+                    mavlink_sg_tgt_ack_item_t par = buffer.ToStructure<mavlink_sg_tgt_ack_item_t>();
+
+                    giveComport = false;
+                    return true;
+                }
             }
         }
 

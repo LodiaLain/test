@@ -169,6 +169,7 @@
             this.TRK_zoom = new MissionPlanner.Controls.MyTrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
             this.CMB_tune_type = new System.Windows.Forms.ComboBox();
+            this.but_timesync_test = new MissionPlanner.Controls.MyButton();
             this.BUT_att_tune_view = new MissionPlanner.Controls.MyButton();
             this.coords1 = new MissionPlanner.Controls.Coords();
             this.Zoomlevel = new System.Windows.Forms.NumericUpDown();
@@ -183,7 +184,7 @@
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.Messagetabtimer = new System.Windows.Forms.Timer(this.components);
             this.bindingSourceStatusTab = new System.Windows.Forms.BindingSource(this.components);
-            this.but_timesync_test = new MissionPlanner.Controls.MyButton();
+            this.BUT_send_tgt_test = new MissionPlanner.Controls.MyButton();
             ((System.ComponentModel.ISupportInitialize)(this.MainH)).BeginInit();
             this.MainH.Panel1.SuspendLayout();
             this.MainH.Panel2.SuspendLayout();
@@ -2103,7 +2104,7 @@
             this.windDir1.BackColor = System.Drawing.Color.Transparent;
             this.windDir1.DataBindings.Add(new System.Windows.Forms.Binding("Direction", this.bindingSource1, "wind_dir", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.windDir1.DataBindings.Add(new System.Windows.Forms.Binding("Speed", this.bindingSource1, "wind_vel", true, System.Windows.Forms.DataSourceUpdateMode.Never));
-            this.windDir1.Direction = 360D;
+            this.windDir1.Direction = 180D;
             resources.ApplyResources(this.windDir1, "windDir1");
             this.windDir1.Name = "windDir1";
             this.windDir1.Speed = 0D;
@@ -2203,6 +2204,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.CMB_tune_type);
+            this.panel1.Controls.Add(this.BUT_send_tgt_test);
             this.panel1.Controls.Add(this.but_timesync_test);
             this.panel1.Controls.Add(this.BUT_att_tune_view);
             this.panel1.Controls.Add(this.coords1);
@@ -2222,6 +2224,13 @@
             resources.GetString("CMB_tune_type.Items2")});
             resources.ApplyResources(this.CMB_tune_type, "CMB_tune_type");
             this.CMB_tune_type.Name = "CMB_tune_type";
+            // 
+            // but_timesync_test
+            // 
+            resources.ApplyResources(this.but_timesync_test, "but_timesync_test");
+            this.but_timesync_test.Name = "but_timesync_test";
+            this.but_timesync_test.UseVisualStyleBackColor = true;
+            this.but_timesync_test.Click += new System.EventHandler(this.BUT_timesync_Click);
             // 
             // BUT_att_tune_view
             // 
@@ -2340,12 +2349,12 @@
             // 
             this.bindingSourceStatusTab.DataSource = typeof(MissionPlanner.CurrentState);
             // 
-            // but_timesync_test
+            // BUT_send_tgt_test
             // 
-            resources.ApplyResources(this.but_timesync_test, "but_timesync_test");
-            this.but_timesync_test.Name = "but_timesync_test";
-            this.but_timesync_test.UseVisualStyleBackColor = true;
-            this.but_timesync_test.Click += new System.EventHandler(this.BUT_timesync_Click);
+            resources.ApplyResources(this.BUT_send_tgt_test, "BUT_send_tgt_test");
+            this.BUT_send_tgt_test.Name = "BUT_send_tgt_test";
+            this.BUT_send_tgt_test.UseVisualStyleBackColor = true;
+            this.BUT_send_tgt_test.Click += new System.EventHandler(this.BUT_send_tgt_test_Click);
             // 
             // FlightData
             // 
@@ -2595,5 +2604,6 @@
         private Controls.MyButton BUT_att_tune_view;
         private System.Windows.Forms.ComboBox CMB_tune_type;
         private Controls.MyButton but_timesync_test;
+        private Controls.MyButton BUT_send_tgt_test;
     }
 }

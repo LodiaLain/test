@@ -4714,6 +4714,27 @@ namespace MissionPlanner.GCSViews
                 MainV2.comPort.att_tune_logpath = "";
             }
         }
+
+        private void BUT_send_tgt_test_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Rectangle targetRect = new Rectangle(2, 3, 4, 5);
+                UInt32 seq = 1;
+                bool isOK = MainV2.comPort.sendTrackingTarget(seq, targetRect, MainV2.comPort.MAV.sysid);
+                if (isOK)
+                {
+                    //frmProgressReporter.UpdateProgressAndStatus(-1, "上传数据成功!");
+                    MessageBox.Show("上传数据：" + targetRect.Location.X.ToString() + "," + targetRect.Location.Y + "," + targetRect.Size.Width + "," + targetRect.Size.Height, "指令送达成功");
+                }
+                else
+                {
+                    //frmProgressReporter.UpdateProgressAndStatus(-1, "上传数据失败!");
+                    MessageBox.Show("上传数据失败");
+                }
+            }
+            catch { }
+        }
     }
 }
  
