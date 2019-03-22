@@ -1503,6 +1503,24 @@
       <field type="float" name="rpm1">RPM Sensor1.</field>
       <field type="float" name="rpm2">RPM Sensor2.</field>
     </message>
+    <!-- SGDEV specified messages -->
+    <message id="227" name="SG_TGT_COORD">
+      <description>Screen coordinates of 4 courners of targeting square, used by SG Projects</description>
+      <field type="uint8_t" name="target_system">System ID</field>
+      <field type="uint8_t" name="target_component">Component ID</field>
+      <field type="uint32_t" name="frame_index">frame_index</field>
+      <field type="uint16_t" name="locationX">locationX</field>
+      <field type="uint16_t" name="locationY">locationY</field>
+      <field type="uint16_t" name="width">width</field>
+      <field type="uint16_t" name="height">height</field>
+      <field type="uint16_t" name="ext_param">ext_param</field>
+    </message>
+    <message id="228" name="SG_TGT_ACK">
+      <description>Ack message during target coordinates setting. The res field states if this message is a positive ack (res=0) or if an error happened (res=non-zero).</description>
+      <field type="uint8_t" name="target_system">System ID</field>
+      <field type="uint8_t" name="target_component">Component ID</field>
+      <field type="uint8_t" name="res" >Result code</field>
+    </message>
     <!-- ardupilot specific mavlink2 messages starting at 11000-->
     <message id="11000" name="DEVICE_OP_READ">
       <description>Read registers for a device.</description>

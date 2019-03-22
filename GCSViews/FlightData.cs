@@ -4709,6 +4709,91 @@ namespace MissionPlanner.GCSViews
             };
 
             MainV2.comPort.sendPacket(cmd, MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid);
+        }    
+
+        private void BUT_timesync_Click(object sender, EventArgs e)
+        {
+            if (!MainV2.comPort.BaseStream.IsOpen)
+            {
+                return;
+            }
+            // call the generatePacket(MAVLINK_MSG_ID messageType, object indata) method
+            MAVLink.mavlink_timesync_t tsync = new MAVLink.mavlink_timesync_t();
+            tsync.tc1 = tsync.ts1 = (Int64)((DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds * 1000000); ;
+            try
+            {
+                MainV2.comPort.sendPacket(tsync, MainV2.comPort.sysidcurrent, MainV2.comPort.compidcurrent);
+            }
+            catch 
+            {
+                CustomMessageBox.Show("Time_sync msg post failed");
+            }
+        }
+
+        // for additional short-time logging
+        public bool recordext = false;
+        public BufferedStream recordext_file = null;
+        public string recordext_path = "";
+        private void BUT_att_tune_view_Click(object sender, EventArgs e)
+        {
+            recordext = !recordext;
+            if (recordext)
+            {
+                if (!MainV2.comPort.BaseStream.IsOpen)
+                {
+                    recordext = false;
+                    return;
+                }
+                BUT_att_tune_view.Text = "结束记录";
+                Directory.CreateDirectory(Settings.Instance.LogDir);
+
+
+                MainV2.comPort.att_tune_logpath = Settings.Instance.LogDir + Path.DirectorySeparatorChar +
+                            DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".tlog";
+
+                MainV2.comPort.att_tune_logfile =
+                    new BufferedStream(
+                        File.Open(MainV2.comPort.att_tune_logpath, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None));
+            }
+            else
+            {
+                BUT_att_tune_view.Text = "开始记录";
+                // 
+
+                lock (MainV2.comPort.att_tune_logfile)
+                {
+                    MainV2.comPort.att_tune_logfile.Close();
+                    MainV2.comPort.att_tune_logfile = null;
+                }
+
+                Form frm = new MavlinkLog();
+                ThemeManager.ApplyThemeTo(frm);
+                ((MavlinkLog)frm).default_open(MainV2.comPort.att_tune_logpath);
+                ((MavlinkLog)frm).default_Graph(CMB_tune_type.SelectedIndex);
+                frm.Show();
+                MainV2.comPort.att_tune_logpath = "";
+            }
+        }
+
+        private void BUT_send_tgt_test_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Rectangle targetRect = new Rectangle(2, 3, 4, 5);
+                UInt32 seq = 1;
+                bool isOK = MainV2.comPort.sendTrackingTarget(seq, targetRect, MainV2.comPort.MAV.sysid);
+                if (isOK)
+                {
+                    //frmProgressReporter.UpdateProgressAndStatus(-1, "上传数据成功!");
+                    MessageBox.Show("上传数据：" + targetRect.Location.X.ToString() + "," + targetRect.Location.Y + "," + targetRect.Size.Width + "," + targetRect.Size.Height, "指令送达成功");
+                }
+                else
+                {
+                    //frmProgressReporter.UpdateProgressAndStatus(-1, "上传数据失败!");
+                    MessageBox.Show("上传数据失败");
+                }
+            }
+            catch { }
         }
     }
 }

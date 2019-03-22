@@ -169,6 +169,9 @@
             this.gMapControl1 = new MissionPlanner.Controls.myGMAP();
             this.TRK_zoom = new MissionPlanner.Controls.MyTrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.CMB_tune_type = new System.Windows.Forms.ComboBox();
+            this.but_timesync_test = new MissionPlanner.Controls.MyButton();
+            this.BUT_att_tune_view = new MissionPlanner.Controls.MyButton();
             this.coords1 = new MissionPlanner.Controls.Coords();
             this.Zoomlevel = new System.Windows.Forms.NumericUpDown();
             this.label1 = new MissionPlanner.Controls.MyLabel();
@@ -184,6 +187,7 @@
             this.bindingSourceStatusTab = new System.Windows.Forms.BindingSource(this.components);
             this.but_landing_gear_up = new MissionPlanner.Controls.MyButton();
             this.but_landing_gear_down = new MissionPlanner.Controls.MyButton();
+            this.BUT_send_tgt_test = new MissionPlanner.Controls.MyButton();
             ((System.ComponentModel.ISupportInitialize)(this.MainH)).BeginInit();
             this.MainH.Panel1.SuspendLayout();
             this.MainH.Panel2.SuspendLayout();
@@ -2113,7 +2117,7 @@
             this.windDir1.BackColor = System.Drawing.Color.Transparent;
             this.windDir1.DataBindings.Add(new System.Windows.Forms.Binding("Direction", this.bindingSource1, "wind_dir", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.windDir1.DataBindings.Add(new System.Windows.Forms.Binding("Speed", this.bindingSource1, "wind_vel", true, System.Windows.Forms.DataSourceUpdateMode.Never));
-            this.windDir1.Direction = 360D;
+            this.windDir1.Direction = 180D;
             resources.ApplyResources(this.windDir1, "windDir1");
             this.windDir1.Name = "windDir1";
             this.windDir1.Speed = 0D;
@@ -2215,6 +2219,10 @@
             // 
             this.panel1.Controls.Add(this.but_landing_gear_down);
             this.panel1.Controls.Add(this.but_landing_gear_up);
+            this.panel1.Controls.Add(this.CMB_tune_type);
+            this.panel1.Controls.Add(this.BUT_send_tgt_test);
+            this.panel1.Controls.Add(this.but_timesync_test);
+            this.panel1.Controls.Add(this.BUT_att_tune_view);
             this.panel1.Controls.Add(this.coords1);
             this.panel1.Controls.Add(this.Zoomlevel);
             this.panel1.Controls.Add(this.label1);
@@ -2222,6 +2230,30 @@
             this.panel1.Controls.Add(this.CB_tuning);
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
+            // 
+            // CMB_tune_type
+            // 
+            this.CMB_tune_type.FormattingEnabled = true;
+            this.CMB_tune_type.Items.AddRange(new object[] {
+            resources.GetString("CMB_tune_type.Items"),
+            resources.GetString("CMB_tune_type.Items1"),
+            resources.GetString("CMB_tune_type.Items2")});
+            resources.ApplyResources(this.CMB_tune_type, "CMB_tune_type");
+            this.CMB_tune_type.Name = "CMB_tune_type";
+            // 
+            // but_timesync_test
+            // 
+            resources.ApplyResources(this.but_timesync_test, "but_timesync_test");
+            this.but_timesync_test.Name = "but_timesync_test";
+            this.but_timesync_test.UseVisualStyleBackColor = true;
+            this.but_timesync_test.Click += new System.EventHandler(this.BUT_timesync_Click);
+            // 
+            // BUT_att_tune_view
+            // 
+            resources.ApplyResources(this.BUT_att_tune_view, "BUT_att_tune_view");
+            this.BUT_att_tune_view.Name = "BUT_att_tune_view";
+            this.BUT_att_tune_view.UseVisualStyleBackColor = true;
+            this.BUT_att_tune_view.Click += new System.EventHandler(this.BUT_att_tune_view_Click);
             // 
             // coords1
             // 
@@ -2346,6 +2378,12 @@
             this.but_landing_gear_down.Name = "but_landing_gear_down";
             this.but_landing_gear_down.UseVisualStyleBackColor = true;
             this.but_landing_gear_down.Click += new System.EventHandler(this.but_landing_gear_down_Click);
+            // BUT_send_tgt_test
+            // 
+            resources.ApplyResources(this.BUT_send_tgt_test, "BUT_send_tgt_test");
+            this.BUT_send_tgt_test.Name = "BUT_send_tgt_test";
+            this.BUT_send_tgt_test.UseVisualStyleBackColor = true;
+            this.BUT_send_tgt_test.Click += new System.EventHandler(this.BUT_send_tgt_test_Click);
             // 
             // FlightData
             // 
@@ -2595,5 +2633,9 @@
         private System.Windows.Forms.ToolStripMenuItem groundColorToolStripMenuItem;
         private Controls.MyButton but_landing_gear_down;
         private Controls.MyButton but_landing_gear_up;
+        private Controls.MyButton BUT_att_tune_view;
+        private System.Windows.Forms.ComboBox CMB_tune_type;
+        private Controls.MyButton but_timesync_test;
+        private Controls.MyButton BUT_send_tgt_test;
     }
 }

@@ -258,7 +258,11 @@ public partial class MAVLink
 		new message_info(11030, "ESC_TELEMETRY_1_TO_4", 144, 44, 44, typeof( mavlink_esc_telemetry_1_to_4_t )),
 		new message_info(11031, "ESC_TELEMETRY_5_TO_8", 133, 44, 44, typeof( mavlink_esc_telemetry_5_to_8_t )),
 		new message_info(11032, "ESC_TELEMETRY_9_TO_12", 85, 44, 44, typeof( mavlink_esc_telemetry_9_to_12_t )),
-		new message_info(42000, "ICAROUS_HEARTBEAT", 227, 1, 1, typeof( mavlink_icarous_heartbeat_t )),
+
+        new message_info(227, "SG_TGT_COORD", 31, 16, 16, typeof(mavlink_sg_tgt_coord_item_t )),
+        new message_info(228, "SG_TGT_ACK", 243, 3, 3, typeof( mavlink_sg_tgt_ack_item_t )),
+
+        new message_info(42000, "ICAROUS_HEARTBEAT", 227, 1, 1, typeof( mavlink_icarous_heartbeat_t )),
 		new message_info(42001, "ICAROUS_KINEMATIC_BANDS", 239, 46, 46, typeof( mavlink_icarous_kinematic_bands_t )),
 
 	};
@@ -515,6 +519,8 @@ AOA_SSA = 11020,
 ESC_TELEMETRY_1_TO_4 = 11030,
 ESC_TELEMETRY_5_TO_8 = 11031,
 ESC_TELEMETRY_9_TO_12 = 11032,
+SG_TGT_COORD = 227,
+SG_TGT_ACK = 228,
 ICAROUS_HEARTBEAT = 42000,
 ICAROUS_KINEMATIC_BANDS = 42001,
 
@@ -12557,4 +12563,63 @@ ICAROUS_KINEMATIC_BANDS = 42001,
     
     };
 
+    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 16)]
+    /// <summary>
+    /// 上传选择跟踪目标对象消息结构
+    /// </summary>
+    public struct mavlink_sg_tgt_coord_item_t
+    {
+        /// <summary>
+        /// 序号
+        /// </summary>
+        public UInt32 frame_index;
+        /// <summary>
+        /// 区域左上角X
+        /// </summary>
+        public UInt16 pix_top_x;
+        /// <summary>
+        /// 区域左上角Y
+        /// </summary>
+        public UInt16 pix_top_y;
+        /// <summary>
+        /// 区域宽
+        /// </summary>
+        public UInt16 width;
+        /// <summary>
+        /// 区域高
+        /// </summary>
+        public UInt16 height;
+        /// <summary>
+        /// 扩展
+        /// </summary>
+        public UInt16 ext_param;
+        /// <summary>
+        /// System ID
+        /// </summary>
+        public byte target_system;
+        /// <summary>
+        /// Component ID
+        /// </summary>
+        public byte target_component;
+    };
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 3)]
+    /// <summary>
+    /// 上传选择跟踪目标对象应答消息结构
+    /// </summary>
+    public struct mavlink_sg_tgt_ack_item_t
+    {
+        /// <summary>
+        /// System ID
+        /// </summary>
+        public byte target_system;
+        /// <summary>
+        /// Component ID
+        /// </summary>
+        public byte target_component;
+        /// <summary>
+        /// Result code
+        /// </summary>
+        public byte res;
+    }
 }
