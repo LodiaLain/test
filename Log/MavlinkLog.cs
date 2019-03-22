@@ -1773,6 +1773,7 @@ namespace MissionPlanner.Log
                     }
                     // remove lines
                     foreach (var item in removeitems)
+                    { 
                         zg1.GraphPane.CurveList.Remove(item);
                     }
                     // hide unused yaxis
