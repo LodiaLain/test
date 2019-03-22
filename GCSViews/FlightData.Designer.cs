@@ -169,8 +169,6 @@
             this.gMapControl1 = new MissionPlanner.Controls.myGMAP();
             this.TRK_zoom = new MissionPlanner.Controls.MyTrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.but_landing_gear_down = new MissionPlanner.Controls.MyButton();
-            this.but_landing_gear_up = new MissionPlanner.Controls.MyButton();
             this.coords1 = new MissionPlanner.Controls.Coords();
             this.Zoomlevel = new System.Windows.Forms.NumericUpDown();
             this.label1 = new MissionPlanner.Controls.MyLabel();
@@ -184,6 +182,8 @@
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.Messagetabtimer = new System.Windows.Forms.Timer(this.components);
             this.bindingSourceStatusTab = new System.Windows.Forms.BindingSource(this.components);
+            this.but_landing_gear_up = new MissionPlanner.Controls.MyButton();
+            this.but_landing_gear_down = new MissionPlanner.Controls.MyButton();
             ((System.ComponentModel.ISupportInitialize)(this.MainH)).BeginInit();
             this.MainH.Panel1.SuspendLayout();
             this.MainH.Panel2.SuspendLayout();
@@ -331,8 +331,6 @@
             this.hud1.gpshdop = 0F;
             this.hud1.gpshdop2 = 0F;
             this.hud1.groundalt = 0F;
-            this.hud1.groundColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(184)))), ((int)(((byte)(36)))));
-            this.hud1.groundColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(79)))), ((int)(((byte)(7)))));
             this.hud1.groundcourse = 0F;
             this.hud1.groundspeed = 0F;
             this.hud1.heading = 0F;
@@ -2115,7 +2113,7 @@
             this.windDir1.BackColor = System.Drawing.Color.Transparent;
             this.windDir1.DataBindings.Add(new System.Windows.Forms.Binding("Direction", this.bindingSource1, "wind_dir", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.windDir1.DataBindings.Add(new System.Windows.Forms.Binding("Speed", this.bindingSource1, "wind_vel", true, System.Windows.Forms.DataSourceUpdateMode.Never));
-            this.windDir1.Direction = 180D;
+            this.windDir1.Direction = 360D;
             resources.ApplyResources(this.windDir1, "windDir1");
             this.windDir1.Name = "windDir1";
             this.windDir1.Speed = 0D;
@@ -2224,26 +2222,6 @@
             this.panel1.Controls.Add(this.CB_tuning);
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
-            // 
-            // but_landing_gear_down
-            // 
-            this.but_landing_gear_down.ColorMouseDown = System.Drawing.Color.Empty;
-            this.but_landing_gear_down.ColorMouseOver = System.Drawing.Color.Empty;
-            this.but_landing_gear_down.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(this.but_landing_gear_down, "but_landing_gear_down");
-            this.but_landing_gear_down.Name = "but_landing_gear_down";
-            this.but_landing_gear_down.UseVisualStyleBackColor = true;
-            this.but_landing_gear_down.Click += new System.EventHandler(this.but_landing_gear_down_Click);
-            // 
-            // but_landing_gear_up
-            // 
-            this.but_landing_gear_up.ColorMouseDown = System.Drawing.Color.Empty;
-            this.but_landing_gear_up.ColorMouseOver = System.Drawing.Color.Empty;
-            this.but_landing_gear_up.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(this.but_landing_gear_up, "but_landing_gear_up");
-            this.but_landing_gear_up.Name = "but_landing_gear_up";
-            this.but_landing_gear_up.UseVisualStyleBackColor = true;
-            this.but_landing_gear_up.Click += new System.EventHandler(this.but_landing_gear_up_Click);
             // 
             // coords1
             // 
@@ -2354,6 +2332,20 @@
             // bindingSourceStatusTab
             // 
             this.bindingSourceStatusTab.DataSource = typeof(MissionPlanner.CurrentState);
+            // 
+            // but_landing_gear_up
+            // 
+            resources.ApplyResources(this.but_landing_gear_up, "but_landing_gear_up");
+            this.but_landing_gear_up.Name = "but_landing_gear_up";
+            this.but_landing_gear_up.UseVisualStyleBackColor = true;
+            this.but_landing_gear_up.Click += new System.EventHandler(this.but_landing_gear_up_Click);
+            // 
+            // but_landing_gear_down
+            // 
+            resources.ApplyResources(this.but_landing_gear_down, "but_landing_gear_down");
+            this.but_landing_gear_down.Name = "but_landing_gear_down";
+            this.but_landing_gear_down.UseVisualStyleBackColor = true;
+            this.but_landing_gear_down.Click += new System.EventHandler(this.but_landing_gear_down_Click);
             // 
             // FlightData
             // 
