@@ -151,6 +151,7 @@
             this.flightPlannerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setEKFHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setHomeHereToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.takeOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.onOffCameraOverlapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.altitudeAngelSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -167,6 +168,8 @@
             this.gMapControl1 = new MissionPlanner.Controls.myGMAP();
             this.TRK_zoom = new MissionPlanner.Controls.MyTrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.but_landing_gear_down = new MissionPlanner.Controls.MyButton();
+            this.but_landing_gear_up = new MissionPlanner.Controls.MyButton();
             this.coords1 = new MissionPlanner.Controls.Coords();
             this.Zoomlevel = new System.Windows.Forms.NumericUpDown();
             this.label1 = new MissionPlanner.Controls.MyLabel();
@@ -180,7 +183,6 @@
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.Messagetabtimer = new System.Windows.Forms.Timer(this.components);
             this.bindingSourceStatusTab = new System.Windows.Forms.BindingSource(this.components);
-            this.setHomeHereToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.MainH)).BeginInit();
             this.MainH.Panel1.SuspendLayout();
             this.MainH.Panel2.SuspendLayout();
@@ -328,6 +330,8 @@
             this.hud1.gpshdop = 0F;
             this.hud1.gpshdop2 = 0F;
             this.hud1.groundalt = 0F;
+            this.hud1.groundColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(184)))), ((int)(((byte)(36)))));
+            this.hud1.groundColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(79)))), ((int)(((byte)(7)))));
             this.hud1.groundcourse = 0F;
             this.hud1.groundspeed = 0F;
             this.hud1.heading = 0F;
@@ -345,6 +349,8 @@
             this.hud1.pitch = 0F;
             this.hud1.roll = 0F;
             this.hud1.Russian = false;
+            this.hud1.skyColor1 = System.Drawing.Color.Blue;
+            this.hud1.skyColor2 = System.Drawing.Color.LightBlue;
             this.hud1.speedunit = null;
             this.hud1.SSA = 0F;
             this.hud1.status = false;
@@ -2052,6 +2058,12 @@
             resources.ApplyResources(this.setEKFHomeHereToolStripMenuItem, "setEKFHomeHereToolStripMenuItem");
             this.setEKFHomeHereToolStripMenuItem.Click += new System.EventHandler(this.setEKFHomeHereToolStripMenuItem_Click);
             // 
+            // setHomeHereToolStripMenuItem1
+            // 
+            this.setHomeHereToolStripMenuItem1.Name = "setHomeHereToolStripMenuItem1";
+            resources.ApplyResources(this.setHomeHereToolStripMenuItem1, "setHomeHereToolStripMenuItem1");
+            this.setHomeHereToolStripMenuItem1.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
+            // 
             // takeOffToolStripMenuItem
             // 
             this.takeOffToolStripMenuItem.Name = "takeOffToolStripMenuItem";
@@ -2193,6 +2205,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.but_landing_gear_down);
+            this.panel1.Controls.Add(this.but_landing_gear_up);
             this.panel1.Controls.Add(this.coords1);
             this.panel1.Controls.Add(this.Zoomlevel);
             this.panel1.Controls.Add(this.label1);
@@ -2200,6 +2214,26 @@
             this.panel1.Controls.Add(this.CB_tuning);
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
+            // 
+            // but_landing_gear_down
+            // 
+            this.but_landing_gear_down.ColorMouseDown = System.Drawing.Color.Empty;
+            this.but_landing_gear_down.ColorMouseOver = System.Drawing.Color.Empty;
+            this.but_landing_gear_down.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.but_landing_gear_down, "but_landing_gear_down");
+            this.but_landing_gear_down.Name = "but_landing_gear_down";
+            this.but_landing_gear_down.UseVisualStyleBackColor = true;
+            this.but_landing_gear_down.Click += new System.EventHandler(this.but_landing_gear_down_Click);
+            // 
+            // but_landing_gear_up
+            // 
+            this.but_landing_gear_up.ColorMouseDown = System.Drawing.Color.Empty;
+            this.but_landing_gear_up.ColorMouseOver = System.Drawing.Color.Empty;
+            this.but_landing_gear_up.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.but_landing_gear_up, "but_landing_gear_up");
+            this.but_landing_gear_up.Name = "but_landing_gear_up";
+            this.but_landing_gear_up.UseVisualStyleBackColor = true;
+            this.but_landing_gear_up.Click += new System.EventHandler(this.but_landing_gear_up_Click);
             // 
             // coords1
             // 
@@ -2311,15 +2345,8 @@
             // 
             this.bindingSourceStatusTab.DataSource = typeof(MissionPlanner.CurrentState);
             // 
-            // setHomeHereToolStripMenuItem1
-            // 
-            this.setHomeHereToolStripMenuItem1.Name = "setHomeHereToolStripMenuItem1";
-            resources.ApplyResources(this.setHomeHereToolStripMenuItem1, "setHomeHereToolStripMenuItem1");
-            this.setHomeHereToolStripMenuItem1.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
-            // 
             // FlightData
             // 
-            
             this.Controls.Add(this.MainH);
             resources.ApplyResources(this, "$this");
             this.Name = "FlightData";
@@ -2563,5 +2590,7 @@
         private System.Windows.Forms.GroupBox groupBoxPitch;
         private Controls.MyButton BUT_PayloadFolder;
         private System.Windows.Forms.ToolStripMenuItem setHomeHereToolStripMenuItem1;
+        private Controls.MyButton but_landing_gear_down;
+        private Controls.MyButton but_landing_gear_up;
     }
 }
