@@ -130,9 +130,9 @@ namespace MissionPlanner.Controls
             float wRatio = this.Width / (float)extent.Width;
             float ratio = (hRatio < wRatio) ? hRatio : wRatio;
 
-            float newSize = this.Font.Size * ratio;
+            float newSize = (this.Font.Size * ratio) - 0.6f;
 
-            if (newSize < 8)
+            if (newSize < 8 || newSize > 999999)
                 newSize = 8;
 
             labelWithPseudoOpacity2.Font = new Font(labelWithPseudoOpacity2.Font.FontFamily, newSize - 2, labelWithPseudoOpacity2.Font.Style);

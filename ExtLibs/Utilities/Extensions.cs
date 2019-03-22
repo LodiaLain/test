@@ -8,11 +8,29 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MissionPlanner.Comms;
+using Newtonsoft.Json;
 
 namespace MissionPlanner.Utilities
 {
     public static class Extensions
     {
+        public static string ToJSON(this object msg)
+        {
+            return JsonConvert.SerializeObject(msg);
+        }
+
+        public static string RemoveFromEnd(this string s, string suffix)
+        {
+            if (s.EndsWith(suffix))
+            {
+                return s.Substring(0, s.Length - suffix.Length);
+            }
+            else
+            {
+                return s;
+            }
+        }
+
         public static string TrimUnPrintable(this string input)
         {
             return Regex.Replace(input, @"[^\u0020-\u007E]", String.Empty);
@@ -51,15 +69,16 @@ namespace MissionPlanner.Utilities
             }
 
             return value is sbyte
+                   || value is double
+                   || value is float
+                   || value is uint
                    || value is byte
                    || value is short
                    || value is ushort
                    || value is int
-                   || value is uint
                    || value is long
                    || value is ulong
-                   || value is float
-                   || value is double
+                   
                    || value is decimal;
         }
 
@@ -169,6 +188,23 @@ namespace MissionPlanner.Utilities
             }
 
             yield return new Tuple<T, T, T>(now, next, InvalidValue);
+        }
+
+        public static IEnumerable<Tuple<T, T>> NowNextBy2<T>(this IEnumerable<T> list)
+        {
+            T now = default(T);
+            T next = default(T);
+
+            int a = -1;
+            foreach (var item in list)
+            {
+                a++;
+                now = next;
+                next = item;
+                if(a % 2 == 0)
+                    continue;
+                yield return new Tuple<T, T>(now, next);
+            }
         }
 
         public static object GetPropertyOrField(this object obj, string name)
